@@ -1,1 +1,8 @@
 /.idea
+
+# Node.js
+/node_modules
+/package-lock.json
+
+# Vite build output
+/static/style.css

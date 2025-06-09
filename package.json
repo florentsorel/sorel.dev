@@ -1,0 +1,9 @@
+{
+  "name": "sorel-dev",
+  "version": "1.0.0",
+  "description": "Personal website of Florent Sorel",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "tailwindcss": "^4.1.8"
+  }
+}

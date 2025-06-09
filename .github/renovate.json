@@ -1,0 +1,58 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "addLabels": ["dependencies"],
+  "semanticCommitType": "chore",
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
+  "postUpdateOptions": [
+    "gomodTidy",
+    "gomodUpdateImportPaths"
+  ],
+  "rebaseWhen": "behind-base-branch",
+  "schedule": "* 0-10 * * 1",
+  "timezone": "Europe/Paris",
+  "enabledManagers": [
+    "custom.regex",
+    "dockerfile",
+    "gomod",
+    "github-actions"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "dockerfile",
+        "gomod"
+      ],
+      "matchDatasources": [
+        "docker",
+        "golang-version"
+      ],
+      "groupName": "go",
+      "rangeStrategy": "bump",
+      "enabled": true
+    },
+    {
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchDatasources": [
+        "go"
+      ],
+      "rangeStrategy": "semver",
+      "enabled": true
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        ".github\\/workflows\\/.*\\.yml"
+      ],
+      "matchStrings": [
+        "\\s*uses: (?<depName>.*?)-action@v\\d\\s*with:\\s*version:\\s*(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}
