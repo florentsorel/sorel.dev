@@ -1,4 +1,4 @@
-FROM node:20-alpine AS css-builder
+FROM node:22.20.0-alpine AS css-builder
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
