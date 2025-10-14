@@ -1,4 +1,4 @@
-FROM node:20-alpine AS css-builder
+FROM node:20.19.5-alpine AS css-builder
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
@@ -22,7 +22,7 @@ RUN apk add --no-cache curl && \
 COPY . .
 RUN npx tailwindcss -i ./src/input.css -o ./static/style.css
 
-FROM golang:1.24.3 AS builder
+FROM golang:1.25.3 AS builder
 
 WORKDIR /app
 COPY go.* ./
