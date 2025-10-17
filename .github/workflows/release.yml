@@ -1,0 +1,40 @@
+name: Build and release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Install Tailwind CLI
+        run: npm install @tailwindcss/cli
+      - name: Build CSS
+        run: npx @tailwindcss/cli -i ./src/input.css -o ./static/style.css
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: "go.mod"
+      - name: Build
+        run: |
+          mkdir -p build
+          CGO_ENABLED=0 GOARCH=amd64 go build -o build/app main.go
+      - name: Create release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
