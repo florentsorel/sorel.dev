@@ -6,3 +6,5 @@
 
 # Vite build output
 /static/style.css
+
+/build

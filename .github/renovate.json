@@ -14,23 +14,19 @@
   "timezone": "Europe/Paris",
   "enabledManagers": [
     "custom.regex",
-    "dockerfile",
     "gomod",
     "github-actions"
   ],
   "packageRules": [
     {
       "matchManagers": [
-        "dockerfile",
         "gomod"
       ],
       "matchDatasources": [
-        "docker",
         "golang-version"
       ],
       "groupName": "go",
-      "rangeStrategy": "bump",
-      "enabled": true
+      "rangeStrategy": "bump"
     },
     {
       "matchManagers": [
@@ -39,8 +35,7 @@
       "matchDatasources": [
         "go"
       ],
-      "rangeStrategy": "semver",
-      "enabled": true
+      "rangeStrategy": "semver"
     }
   ],
   "customManagers": [

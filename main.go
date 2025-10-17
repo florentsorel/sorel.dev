@@ -2,10 +2,12 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"html/template"
 	"io/fs"
 	"log"
 	"net/http"
+	"os"
 )
 
 //go:embed templates/*
@@ -15,6 +17,12 @@ var templateFS embed.FS
 var staticFS embed.FS
 
 func main() {
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	tmpl, err := template.ParseFS(templateFS, "templates/index.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
@@ -40,8 +48,8 @@ func main() {
 		}
 	})
 
-	log.Printf("Server starting on port %s", "8080")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	log.Printf("Server starting on port %s", port)
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", port), nil); err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
 }
